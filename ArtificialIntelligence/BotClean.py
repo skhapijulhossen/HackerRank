@@ -1,35 +1,25 @@
 #!/usr/bin/python
-
+from math import sqrt
 # Head ends here
 
 def next_move(posr, posc, board):
     dirtyCells = []
     for row in range(5):
-        dirtyCells.extend([{(abs(posr-row)+abs(posc-col)): (row, col)}
+        dirtyCells.extend([{sqrt(((posr-row)**2)+((posc-col)**2)): (row, col)}
                            for col in range(5) if board[row][col] == "d"])
     nearest = list(sorted(dirtyCells, key=lambda k: list(k.keys())[0])[0].values())
-    step=''
-    print(nearest)
-    if nearest[0][0] == posr:
-        if nearest[0][1] < posc:
-            step = "LEFT"
-        elif nearest[0][1] > posc:
-            step = "RIGHT"
-        else:
-            pass
+    move=''
+    if nearest[0][1] < posc:
+        move='LEFT'
+    elif nearest[0][1] > posc:
+        move='RIGHT'
+    elif nearest[0][0] < posr:
+        move='UP'
+    elif nearest[0][0] > posr:
+        move='DOWN'
     else:
-        if nearest[0][0] < posr:
-            step = "UP"
-        elif nearest[0][0] > posr:
-            step = "DOWN"
-        else:
-            pass
-    print(step)
-        
-
-
-
-    
+        move='CLEAN'
+    print(move)
 
 # Tail starts here
 
